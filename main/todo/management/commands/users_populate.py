@@ -1,13 +1,20 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.core.management import call_command
 from todo.models import User
+from django.contrib.auth.models import User as DjangoUser
+
 
 class Command(BaseCommand):
-    help='Populate several Todo app users'
+    help='Create superuser and populate several Todo app users'
 
     def _add_todo_user(self,param_dict):
         User.objects.create(**param_dict)
 
+    def _add_super_user(self):
+        DjangoUser.objects.create_superuser('root@emaple.com','root','123')
+
     def handle(self,*args, **options):
+        self._add_super_user()
         for index in range(3):
             params_dict={}
             params_dict.update({'user_name':f'test{index}'})
