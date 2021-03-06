@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.core.management import call_command
+# from django.core.management import call_command
 from todo.models import User
 from django.contrib.auth.models import User as DjangoUser
 
@@ -11,7 +11,7 @@ class Command(BaseCommand):
         User.objects.create(**param_dict)
 
     def _add_super_user(self):
-        DjangoUser.objects.create_superuser('root@emaple.com','root','123')
+        DjangoUser.objects.create_superuser('root',email='root@emaple.com',password='rootpass')
 
     def handle(self,*args, **options):
         self._add_super_user()
