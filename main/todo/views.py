@@ -5,7 +5,7 @@ from rest_framework.mixins import ListModelMixin,RetrieveModelMixin, UpdateModel
 from rest_framework.response import Response
 from .models import User,Project,ToDo
 from .serializers import UserModelSreializer,ProjectModelSerializer,ToDoModelSerializer
-from .filters import ProjectFilter
+from .filters import ProjectFilter, ToDoFilter
 from .pagination import ProjectPagination, ToDoPagination
 
 # Create your views here.
@@ -22,6 +22,7 @@ class ProjectModelViewSet(ModelViewSet):
 class ToDoModelViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoModelSerializer
+    filterset_class = ToDoFilter
     pagination_class = ToDoPagination
 
     def destroy(self,request, pk=None):
