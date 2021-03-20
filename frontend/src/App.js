@@ -2,15 +2,21 @@ import React from "react";
 import logo from './logo.svg';
 import './App.css';
 import UsersList from "./components/Users";
+import ProjectsList from "./components/Projects";
+import ToDosList from "./components/ToDos";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 import axios from 'axios';
+import {BrowserRouter, HashRouter, Route, Link, Switch} from 'react-router-dom'
+
 
 class App extends React.Component{
     constructor(props){
         super(props);
         this.state={
             'users':[],
+            'projects': [],
+            'todos': [],
             'menu_items':[],
             'footer' : ''
         }
@@ -43,15 +49,36 @@ class App extends React.Component{
                     'users' : users
                 })
             }).catch(error=>console.log(error))
+        axios.get('http://127.0.0.1:8000/api/project/')
+            .then (response =>{
+                const projects=response.data.results
+                this.setState ({
+                    'projects' : projects
+                })
+            }).catch(error=>console.log(error))
+        axios.get('http://127.0.0.1:8000/api/todo/')
+            .then (response =>{
+                const todos=response.data.results
+                this.setState ({
+                    'todos' : todos
+                })
+            }).catch(error=>console.log(error))
 
     }
 
     render(){
         return (
+
             <div>
-                <Menu menu_items={this.state.menu_items} />
-                <UsersList users={this.state.users} />
-                <Footer footer={this.state.footer} />
+                <BrowserRouter>
+                    <Menu menu_items={this.state.menu_items} />
+                    <Switch>
+                        <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
+                        <Route exact path='/projects' component={() => <ProjectsList projects={this.state.projects} />} />
+                        <Route exact path='/todos' component={() => <ToDosList todos={this.state.todos} />} />
+                    </Switch>
+                    <Footer footer={this.state.footer} />
+                </BrowserRouter>
             </div>
         )
     }
