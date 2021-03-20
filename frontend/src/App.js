@@ -1,5 +1,5 @@
 import React from "react";
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import UsersList from "./components/Users";
 import ProjectsList from "./components/Projects";
@@ -7,7 +7,7 @@ import ToDosList from "./components/ToDos";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 import axios from 'axios';
-import {BrowserRouter, HashRouter, Route, Link, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 
 class App extends React.Component{
@@ -25,13 +25,16 @@ class App extends React.Component{
     componentDidMount(){
         const menu_items=[
             {
-                'name': 'Главная'
+                'name': 'Главная',
+                'path': '/',
             },
             {
-                'name': 'Тестовый пункт меню 1'
+                'name': 'Проекты',
+                'path': '/projects',
             },
             {
-                'name': 'Тестовый пункт меню 2'
+                'name': 'Заметки',
+                'path': '/todos',
             },
         ]
         const footer='Footer Message'
