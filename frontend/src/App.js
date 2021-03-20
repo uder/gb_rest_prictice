@@ -3,6 +3,7 @@ import React from "react";
 import './App.css';
 import UsersList from "./components/Users";
 import ProjectsList from "./components/Projects";
+import ProjectInfo from "./components/ProjectInfo";
 import ToDosList from "./components/ToDos";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
@@ -78,6 +79,7 @@ class App extends React.Component{
                     <Switch>
                         <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
                         <Route exact path='/projects' component={() => <ProjectsList projects={this.state.projects} />} />
+                        <Route exact path='/project/:id' component={() => <ProjectInfo projects={this.state.projects} />} />
                         <Route exact path='/todos' component={() => <ToDosList todos={this.state.todos} />} />
                     </Switch>
                     <Footer footer={this.state.footer} />
@@ -86,5 +88,4 @@ class App extends React.Component{
         )
     }
 }
-
 export default App;
