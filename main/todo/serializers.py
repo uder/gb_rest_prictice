@@ -1,4 +1,4 @@
-from rest_framework.serializers import HyperlinkedModelSerializer,PrimaryKeyRelatedField,SlugRelatedField,StringRelatedField
+from rest_framework.serializers import HyperlinkedModelSerializer,PrimaryKeyRelatedField,SlugRelatedField,StringRelatedField,ModelSerializer
 from .models import User,Project,ToDo
 
 class UserModelSreializer(HyperlinkedModelSerializer):
@@ -6,7 +6,7 @@ class UserModelSreializer(HyperlinkedModelSerializer):
         model=User
         fields=('user_name', 'first_name', 'last_name', 'email')
 
-class ProjectModelSerializer(HyperlinkedModelSerializer):
+class ProjectModelSerializer(ModelSerializer):
     users=PrimaryKeyRelatedField(queryset=User.objects.all(),many=True)
     class Meta:
         model=Project

@@ -1,18 +1,22 @@
 import React from "react";
+import {Link} from 'react-router-dom';
+
 
 const MenuItem = ({menu_item}) =>{
     return (
         <li>
-            {menu_item.name}
+            <Link to={menu_item.path}>{menu_item.name}</Link>
         </li>
     )
 }
 
 const Menu=({menu_items})=>{
     return (
-        <ul>
-            {menu_items.map((item)=><MenuItem menu_item={item} />)}
-        </ul>
+        <nav>
+            <ul>
+                {menu_items.map((item)=><MenuItem menu_item={item} />)}
+            </ul>
+        </nav>
     )
 }
 
