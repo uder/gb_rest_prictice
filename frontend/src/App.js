@@ -25,12 +25,14 @@ class App extends React.Component{
             'menu_items':[],
             'footer' : '',
             'token': '',
+            'signed_user': '',
         }
     }
 
-    set_token(token) {
+    set_token(user,token) {
         const cookies = new Cookies()
         cookies.set('token',token)
+        this.setState({'signed_user': user})
         this.setState({'token': token}, ()=>this.load_data())
     }
 
@@ -39,7 +41,7 @@ class App extends React.Component{
     }
 
     logout() {
-        this.set_token('')
+        this.set_token('','')
         this.setState({'users':[]})
         this.setState({'projects':[]})
         this.setState({'todos':[]})
@@ -67,7 +69,7 @@ class App extends React.Component{
             //For testing purposes only. Comment out next line
 //            console.log(response.data)
 
-            this.set_token(response.data['token'])
+            this.set_token(user,response.data['token'])
         }).catch(error=>alert('Wrong UserName or Password'))
     }
     componentDidMount(){
@@ -135,7 +137,7 @@ class App extends React.Component{
 
             <div>
                 <BrowserRouter>
-                    <LoginButton is_authenticated={()=>this.is_authenticated()} logout={()=>this.logout()} />
+                    <LoginButton is_authenticated={()=>this.is_authenticated()} logout={()=>this.logout()} signed_user={this.state.signed_user} />
                     <Menu menu_items={this.state.menu_items} />
                     <Switch>
                         <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
@@ -156,5 +158,3 @@ class App extends React.Component{
     }
 }
 export default App;
-//                        <Route exact path='/logout' component={()=><Logout logout={()=>this.logout()}/>}
-//                        />

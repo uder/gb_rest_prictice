@@ -14,6 +14,7 @@ class LoginButton extends React.Component{
         return(
                 this.props.is_authenticated() ?
                     <div class='login'>
+                        <span>{this.props.signed_user} </span>
                         <button onClick={()=>this.props.logout()}>Выйти</button>
                     </div>
                 :
