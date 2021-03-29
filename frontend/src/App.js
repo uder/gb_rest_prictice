@@ -98,29 +98,36 @@ class App extends React.Component{
 
     load_data(){
         const headers=this.get_headers()
-        console.log(headers)
-        console.log(this.state.token)
         axios.get('http://127.0.0.1:8000/api/user/',{headers})
             .then (response =>{
                 const users=response.data.results
                 this.setState ({
                     'users' : users
                 })
-            }).catch(error=>console.log(error))
+            }).catch(error=>{
+                this.setState({'users':[]})
+                console.log(error)
+            })
         axios.get('http://127.0.0.1:8000/api/project/',{headers})
             .then (response =>{
                 const projects=response.data.results
                 this.setState ({
                     'projects' : projects
                 })
-            }).catch(error=>console.log(error))
+            }).catch(error=>{
+                this.setState({'projects': []})
+                console.log(error)
+            })
         axios.get('http://127.0.0.1:8000/api/todo/',{headers})
             .then (response =>{
                 const todos=response.data.results
                 this.setState ({
                     'todos' : todos
                 })
-            }).catch(error=>console.log(error))
+            }).catch(error=>{
+                this.setState({'todos':[]})
+                console.log(error)
+            })
     }
 
     render(){
