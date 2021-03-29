@@ -31,7 +31,7 @@ class App extends React.Component{
     set_token(token) {
         const cookies = new Cookies()
         cookies.set('token',token)
-        this.setState({'token': token})
+        this.setState({'token': token}, ()=>this.load_data())
     }
 
     is_authenticated(){
@@ -40,12 +40,24 @@ class App extends React.Component{
 
     logout() {
         this.set_token('')
+        this.setState({'users':[]})
+        this.setState({'projects':[]})
+        this.setState({'todos':[]})
     }
 
     get_token_from_storage(){
         const cookies = new Cookies()
         const token = cookies.get('token')
-        this.setState({'token':token})
+        this.setState({'token':token}, ()=>this.load_data())
+    }
+    get_headers(){
+        let headers={
+            'Content-Type': 'application/json'
+        }
+        if (this.is_authenticated()){
+            headers['Authorization']='Token '+this.state.token
+        }
+        return(headers)
     }
 
     get_token(user,password){
@@ -60,6 +72,7 @@ class App extends React.Component{
     }
     componentDidMount(){
         this.get_token_from_storage()
+        this.load_data()
         const menu_items=[
             {
                 'name': 'Главная',
@@ -81,29 +94,33 @@ class App extends React.Component{
                 'footer': footer,
             }
         )
+    }
 
-        axios.get('http://127.0.0.1:8000/api/user/')
+    load_data(){
+        const headers=this.get_headers()
+        console.log(headers)
+        console.log(this.state.token)
+        axios.get('http://127.0.0.1:8000/api/user/',{headers})
             .then (response =>{
                 const users=response.data.results
                 this.setState ({
                     'users' : users
                 })
             }).catch(error=>console.log(error))
-        axios.get('http://127.0.0.1:8000/api/project/')
+        axios.get('http://127.0.0.1:8000/api/project/',{headers})
             .then (response =>{
                 const projects=response.data.results
                 this.setState ({
                     'projects' : projects
                 })
             }).catch(error=>console.log(error))
-        axios.get('http://127.0.0.1:8000/api/todo/')
+        axios.get('http://127.0.0.1:8000/api/todo/',{headers})
             .then (response =>{
                 const todos=response.data.results
                 this.setState ({
                     'todos' : todos
                 })
             }).catch(error=>console.log(error))
-
     }
 
     render(){
