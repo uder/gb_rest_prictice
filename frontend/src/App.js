@@ -8,6 +8,8 @@ import ToDosList from "./components/ToDos";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 import LoginForm from "./components/Login.js";
+import LoginButton from './components/LoginButton';
+
 import axios from 'axios';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -47,6 +49,7 @@ class App extends React.Component{
     }
 
     get_token(user,password){
+//        console.log({'user':user, 'password': password})
         axios.post('http://127.0.0.1:8000/api-token-auth/', {'username': user, 'password': password})
         .then( response=> {
             //For testing purposes only. Comment out next line
@@ -56,6 +59,7 @@ class App extends React.Component{
         }).catch(error=>alert('Wrong UserName or Password'))
     }
     componentDidMount(){
+        this.get_token_from_storage()
         const menu_items=[
             {
                 'name': 'Главная',
@@ -68,10 +72,6 @@ class App extends React.Component{
             {
                 'name': 'Заметки',
                 'path': '/todos',
-            },
-            {
-                'name': 'Войти',
-                'path': '/login',
             },
         ]
         const footer='Footer Message'
@@ -111,6 +111,7 @@ class App extends React.Component{
 
             <div>
                 <BrowserRouter>
+                    <LoginButton is_authenticated={()=>this.is_authenticated()} logout={()=>this.logout()} />
                     <Menu menu_items={this.state.menu_items} />
                     <Switch>
                         <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
@@ -131,3 +132,5 @@ class App extends React.Component{
     }
 }
 export default App;
+//                        <Route exact path='/logout' component={()=><Logout logout={()=>this.logout()}/>}
+//                        />
