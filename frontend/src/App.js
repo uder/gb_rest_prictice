@@ -7,6 +7,7 @@ import ProjectInfo from "./components/ProjectInfo";
 import ToDosList from "./components/ToDos";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
+import LoginForm from "./components/Login.js";
 import axios from 'axios';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
@@ -36,6 +37,10 @@ class App extends React.Component{
             {
                 'name': 'Заметки',
                 'path': '/todos',
+            },
+            {
+                'name': 'Войти',
+                'path': '/login',
             },
         ]
         const footer='Footer Message'
@@ -81,6 +86,7 @@ class App extends React.Component{
                         <Route exact path='/projects' component={() => <ProjectsList projects={this.state.projects} />} />
                         <Route exact path='/project/:id' component={() => <ProjectInfo projects={this.state.projects} />} />
                         <Route exact path='/todos' component={() => <ToDosList todos={this.state.todos} />} />
+                        <Route exact path='/login' component={() => <LoginForm />} />
                     </Switch>
                     <Footer footer={this.state.footer} />
                 </BrowserRouter>
