@@ -9,7 +9,8 @@ import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 import LoginForm from "./components/Login.js";
 import axios from 'axios';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 
 class App extends React.Component{
@@ -20,10 +21,40 @@ class App extends React.Component{
             'projects': [],
             'todos': [],
             'menu_items':[],
-            'footer' : ''
+            'footer' : '',
+            'token': '',
         }
     }
 
+    set_token(token) {
+        const cookies = new Cookies()
+        cookies.set('token',token)
+        this.setState({'token': token})
+    }
+
+    is_authenticated(){
+        return this.state.token !== ''
+    }
+
+    logout() {
+        this.set_token('')
+    }
+
+    get_token_from_storage(){
+        const cookies = new Cookies()
+        const token = cookies.get('token')
+        this.setState({'token':token})
+    }
+
+    get_token(user,password){
+        axios.post('http://127.0.0.1:8000/api-token-auth/', {'username': user, 'password': password})
+        .then( response=> {
+            //For testing purposes only. Comment out next line
+//            console.log(response.data)
+
+            this.set_token(response.data['token'])
+        }).catch(error=>alert('Wrong UserName or Password'))
+    }
     componentDidMount(){
         const menu_items=[
             {
@@ -74,12 +105,6 @@ class App extends React.Component{
             }).catch(error=>console.log(error))
 
     }
-    get_token(user,password){
-        axios.post('http://127.0.0.1:8000/api-token-auth/', {'username': user, 'password': password})
-        .then( response=> {
-            console.log(response.data)
-        }).catch(error=>alert('Wrong UserName or Password'))
-    }
 
     render(){
         return (
@@ -105,5 +130,4 @@ class App extends React.Component{
         )
     }
 }
-//jhcjjjjhgcjc
 export default App;
