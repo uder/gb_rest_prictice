@@ -16,8 +16,10 @@ class LoginForm extends React.Component{
         );
     }
     handleSubmit(event){
-        //For testing only. Comment out next line
-        console.log(this.state.login+" : "+this.state.password)
+        //For testing only. Comment out next lines
+//        console.log(this.state.login+" : "+this.state.password)
+        this.props.get_token(this.state.login, this.state.password)
+
         event.preventDefault()
     }
     render(){
