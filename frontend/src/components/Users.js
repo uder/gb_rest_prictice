@@ -22,11 +22,17 @@ const UserItem = ({user}) => {
 const UserList=({users})=>{
     return (
         <table>
-            <th>UserName</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>Email</th>
-            {users.map((current)=><UserItem user={current} />)}
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {users.map((current)=><UserItem user={current} />)}
+            </tbody>
         </table>
     )
 }

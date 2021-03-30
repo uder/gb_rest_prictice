@@ -7,6 +7,6 @@ http://127.0.0.1:3000
 
 
 Run DRF App
-set PATH=%PATH%;C:\Program Files\nodejs
+venv\Scripts\python.exe main\manage.py runserver
 
 http://127.0.0.1:8000

@@ -28,13 +28,19 @@ const ToDoItem = ({todo}) => {
 const ToDoList=({todos})=>{
     return (
         <table>
-            <th>Project</th>
-            <th>Creator</th>
-            <th>Text</th>
-            <th>Created at</th>
-            <th>Updated at</th>
-            <th>Active</th>
-            {todos.map((current)=><ToDoItem todo={current} />)}
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Creator</th>
+                    <th>Text</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                    <th>Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                {todos.map((current)=><ToDoItem todo={current} />)}
+            </tbody>
         </table>
     )
 }

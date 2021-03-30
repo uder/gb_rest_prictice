@@ -21,9 +21,15 @@ const ProjectList=({projects})=>{
 //    console.log(filtered_projects)
     return (
         <table>
-            <th>Project Name</th>
-            <th>Repository URL</th>
-            {projects.map((current)=><ProjectItem project={current} />)}
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Repository URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                {projects.map((current)=><ProjectItem project={current} />)}
+            </tbody>
         </table>
     )
 }
