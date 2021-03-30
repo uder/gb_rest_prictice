@@ -13,12 +13,12 @@ class LoginButton extends React.Component{
     render(){
         return(
                 this.props.is_authenticated() ?
-                    <div class='login'>
+                    <div className='login'>
                         <span>{this.props.signed_user} </span>
                         <button onClick={()=>this.props.logout()}>Выйти</button>
                     </div>
                 :
-                    <div class='login'>
+                    <div className='login'>
                         <Login />
                     </div>
             )
