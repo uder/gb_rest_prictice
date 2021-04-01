@@ -32,6 +32,6 @@ class ToDoModelViewSet(ModelViewSet):
         return Response({f"{todo_record}.Active": False})
 
 class UserGenericViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, UpdateModelMixin):
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by('uuid')
     serializer_class = UserModelSreializer
 
