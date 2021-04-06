@@ -14,15 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
-from todo.views import UserModelViewSet,ProjectModelViewSet,ToDoModelViewSet,UserGenericViewSet
+from todo.views import UserModelViewSet,ProjectModelViewSet,ToDoModelViewSet,UserGenericViewSet,DjangoUserGenericViewSet
+from todo.views import schema_view
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 router=DefaultRouter()
 # router.register('user',UserModelViewSet)
 router.register('user',UserGenericViewSet)
+# router.register('djangouser',DjangoUserGenericViewSet)
 router.register('project',ProjectModelViewSet)
 router.register('todo',ToDoModelViewSet)
 
@@ -33,5 +36,8 @@ urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token),
     path('api-jwt-auth/', TokenObtainPairView.as_view(),name='token_obtain_pair'),
     path('api-jwt-auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    re_path(r'^api/v(?P<version>\d)/djangouser/$',DjangoUserGenericViewSet.as_view({'get':'list'})),
+    re_path(r'^api/v(?P<version>\d)/user/$',UserGenericViewSet.as_view({'get':'list'})),
+    path('redoc/',schema_view.with_ui('redoc',cache_timeout=0),name='schema-redoc'),
 ]
 

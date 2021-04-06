@@ -8,6 +8,8 @@ class User(models.Model):
     first_name=models.CharField(max_length=64)
     last_name=models.CharField(max_length=64)
     email=models.CharField(max_length=255, unique=True)
+    is_leader=models.BooleanField(default=False)
+    is_ops=models.BooleanField(default=False)
 
     def __str__(self):
         return self.user_name
