@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 from todo.views import UserModelViewSet,ProjectModelViewSet,ToDoModelViewSet,UserGenericViewSet,DjangoUserGenericViewSet
 from todo.views import schema_view
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from rest_framework.schemas import get_schema_view
 
 router=DefaultRouter()
 # router.register('user',UserModelViewSet)
@@ -39,5 +40,14 @@ urlpatterns = [
     re_path(r'^api/v(?P<version>\d)/djangouser/$',DjangoUserGenericViewSet.as_view({'get':'list'})),
     re_path(r'^api/v(?P<version>\d)/user/$',UserGenericViewSet.as_view({'get':'list'})),
     path('redoc/',schema_view.with_ui('redoc',cache_timeout=0),name='schema-redoc'),
+    path('redoc-part/', TemplateView.as_view(
+        template_name='redoc.html',
+        extra_context={'schema_url':'openapi-schema'}
+    ), name='redoc-part'),
+    path('openapi', get_schema_view(
+        title='openapi',
+        description='api',
+        version='1'
+    ),name='openapi-schema'),
 ]
 
