@@ -16,3 +16,17 @@ Run tests
 cd main
 ..\venv\Scripts\python.exe manage.py test
 
+
+Get DjangoUser models
+First version API
+http://127.0.0.1:8000/api/v1/user/
+http://127.0.0.1:8000/api/v1/djangouser/
+Second version API
+http://127.0.0.1:8000/api/v2/user/
+http://127.0.0.1:8000/api/v2/djangouser/
+
+Docs 
+http://127.0.0.1:8000/redoc/
+
+Partial-docs (without yagf)
+http://127.0.0.1:8000/redoc-part/
