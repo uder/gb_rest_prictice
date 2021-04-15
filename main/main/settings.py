@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework.authtoken',
     'drf_yasg',
+    'graphene_django',
 
     'todo',
 ]
@@ -170,3 +171,6 @@ REST_FRAMEWORK={
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
 }
 
+GRAPHENE = {
+    'SCHEMA': 'todo.schema.schema'
+}
