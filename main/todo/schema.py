@@ -22,6 +22,7 @@ class ProjectType(DjangoObjectType):
 class Query(graphene.ObjectType):
     all_todo=graphene.List(ToDoType)
     all_user=graphene.List(UserType)
+    all_project=graphene.List(ProjectType)
 
     def resolve_all_todo(self, info):
         return ToDo.objects.all()
@@ -29,6 +30,8 @@ class Query(graphene.ObjectType):
     def resolve_all_user(self, info):
         return User.objects.all()
 
+    def resolve_all_project(self, info):
+        return Project.objects.all()
 
 # class Query(graphene.ObjectType):
 #     hello=graphene.String(default_value="Hi!")

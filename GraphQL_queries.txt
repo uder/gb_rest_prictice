@@ -24,3 +24,18 @@
     }
   }
 }
+
+#Projects with user list with related todos
+
+{
+  allProject{
+    name
+    users{
+      userName
+    }
+    todoSet{
+      createdAt
+      text
+    }
+  }
+}
