@@ -1,0 +1,26 @@
+#Todo with project field, with users related to project
+
+{
+  allTodo{
+    uuid
+    text
+    project{
+      name
+      users {
+        userName
+      }
+    }
+  }
+}
+
+#Users with related projects
+
+{
+  allUser{
+    uuid
+    userName
+    projectSet{
+      name
+    }
+  }
+}
