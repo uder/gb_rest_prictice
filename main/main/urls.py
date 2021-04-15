@@ -22,6 +22,7 @@ from todo.views import schema_view
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.schemas import get_schema_view
+from graphene_django.views import GraphQLView
 
 router=DefaultRouter()
 # router.register('user',UserModelViewSet)
@@ -49,5 +50,6 @@ urlpatterns = [
         description='api',
         version='1'
     ),name='openapi-schema'),
+    path('graphql/',GraphQLView.as_view(graphiql=True)),
 ]
 
