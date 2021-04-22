@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 
-const ProjectItem = ({project}) => {
+const ProjectItem = ({project, deleteProject}) => {
     return(
         <tr>
             <td>
@@ -10,11 +10,14 @@ const ProjectItem = ({project}) => {
             <td>
                 {project.repoUrl}
             </td>
+            <td>
+                <button onClick={()=>deleteProject(project.id)} type='button'>Удалить</button>
+            </td>
         </tr>
     )
 }
 
-const ProjectList=({projects})=>{
+const ProjectList=({projects, deleteProject})=>{
 //    let { id } = useParams();
 //    let filtered_projects=projects.filter((project) => projects.id === id)
 //    console.log({id})
@@ -25,10 +28,11 @@ const ProjectList=({projects})=>{
                 <tr>
                     <th>Project Name</th>
                     <th>Repository URL</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {projects.map((current)=><ProjectItem project={current} />)}
+                {projects.map((project)=><ProjectItem project={project} deleteProject={deleteProject}/>)}
             </tbody>
         </table>
     )
