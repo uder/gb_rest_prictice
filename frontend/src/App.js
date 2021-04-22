@@ -133,12 +133,27 @@ class App extends React.Component{
     }
     deleteProject(id) {
         const headers=this.get_headers()
-        console.log(id)
         axios.delete(`http://127.0.0.1:8000/api/project/${id}`, {headers,headers})
             .then(response=> {
                 this.setState({projects: this.state.projects.filter((item)=>item.id !==id)})
             }).catch(error=>console.log(error))
     }
+    deleteTodo(uuid){
+        const headers=this.get_headers()
+        axios.delete(`http://127.0.0.1:8000/api/todo/${uuid}`, {headers,headers})
+            .then(response=> {
+                this.setState({todos: this.state.todos.filter((item)=>item.uuid !==uuid)})
+            }).catch(error=>console.log(error))
+    }
+    createTodo(uuid){
+        const headers=this.get_headers()
+        axios.post(`http://127.0.0.1:8000/api/todo/`, {headers,headers})
+            .then(response=> {
+                this.load_data()
+            }).catch(error=>console.log(error))
+    }
+
+//    }
 
     render(){
         return (
@@ -157,7 +172,14 @@ class App extends React.Component{
                             }
                          />
                         <Route exact path='/project/:id' component={() => <ProjectInfo projects={this.state.projects} />} />
-                        <Route exact path='/todos' component={() => <ToDosList todos={this.state.todos} />} />
+                        <Route exact path='/todos'
+                            component={() => <ToDosList
+                                                todos={this.state.todos}
+                                                deleteTodo={(uuid)=>this.deleteTodo(uuid)}
+                                                createTodo={(uuid)=>this.createTodo(uuid)}
+                                             />
+                            }
+                        />
                         <Route exact path='/login'
                             component={() => <LoginForm
                                                 get_token={(user,password) => this.get_token(user,password)}
