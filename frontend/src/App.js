@@ -124,7 +124,8 @@ class App extends React.Component{
             .then (response =>{
                 const todos=response.data.results
                 this.setState ({
-                    'todos' : todos
+                    todos: todos.filter((item)=>item.active === true)
+
                 })
             }).catch(error=>{
                 this.setState({'todos':[]})
