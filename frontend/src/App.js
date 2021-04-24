@@ -101,7 +101,7 @@ class App extends React.Component{
 
     load_data(){
         const headers=this.get_headers()
-        axios.get('http://127.0.0.1:8000/api/user/',{headers})
+        axios.get('http://127.0.0.1:8000/api/v2/user/',{headers})
             .then (response =>{
                 const users=response.data.results
                 this.setState ({
@@ -198,6 +198,8 @@ class App extends React.Component{
                                                 createTodo={(project,userCreator,text)=>
                                                     this.createTodo(project,userCreator,text)
                                                 }
+                                                projects={this.state.projects}
+                                                users={this.state.users}
                                             />
                             }
                         />
