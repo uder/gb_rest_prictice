@@ -5,6 +5,7 @@ class ToDoForm extends React.Component{
         super(props)
         this.state={
             project: 0,
+            projectname: '',
             user: '',
             text: '',
         }
@@ -31,8 +32,15 @@ class ToDoForm extends React.Component{
                 <div className="form-group">
                     <label htmlFor="project-field">project</label>
                     <select name="project" onChange={(event)=>this.handleChange(event)}>
-                        {this.props.projects.map((item)=><option value={item.id}>{item.name}</option>)}
+                        {this.props.projects.filter((item)=>item.name.includes(this.state.projectname))
+                            .map((item)=><option value={item.id}>{item.name}</option>)}
                     </select>
+                    <input
+                        type="text"
+                        name="projectname"
+                        value={this.state.projectname}
+                        onChange={(event)=>this.handleChange(event)}
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="user-field">userCreator</label>
