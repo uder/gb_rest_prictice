@@ -34,4 +34,4 @@ class ToDoModelSerializer(HyperlinkedModelSerializer):
     user_creator=PrimaryKeyRelatedField(queryset=User.objects.all())
     class Meta:
         model=ToDo
-        fields=['url','uuid','project','created_at','updated_at','user_creator','active']
+        fields=['url','uuid','project','text','created_at','updated_at','user_creator','active']
