@@ -5,6 +5,7 @@ import UsersList from "./components/Users";
 import ProjectsList from "./components/Projects";
 import ProjectInfo from "./components/ProjectInfo";
 import ToDosList from "./components/ToDos";
+import ToDoForm from "./components/ToDoForm";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 import LoginForm from "./components/Login.js";
@@ -146,11 +147,23 @@ class App extends React.Component{
                 this.setState({todos: this.state.todos.filter((item)=>item.uuid !==uuid)})
             }).catch(error=>console.log(error))
     }
-    createTodo(uuid){
+    createTodo(project,userCreator,text){
         const headers=this.get_headers()
-        axios.post(`http://127.0.0.1:8000/api/todo/`, {headers,headers})
+        const data ={
+            project: project,
+            userCreator: userCreator,
+            text: text,
+            active: true,
+        }
+        axios.post(`http://127.0.0.1:8000/api/todo/`, data, {headers,headers})
             .then(response=> {
-                this.load_data()
+                let new_todo=response.data
+                const project = this.state.projects.filter((item)=>item.id === new_todo.project)[0]
+                new_todo.project = project
+                const userCreator = this.state.users.filter((item)=>item.uuid === new_todo.userCreator)[0]
+                new_todo.userCreator = userCreator
+                this.setState({todos: [...this.state.todos, new_todo]})
+
             }).catch(error=>console.log(error))
     }
 
@@ -177,8 +190,15 @@ class App extends React.Component{
                             component={() => <ToDosList
                                                 todos={this.state.todos}
                                                 deleteTodo={(uuid)=>this.deleteTodo(uuid)}
-                                                createTodo={(uuid)=>this.createTodo(uuid)}
                                              />
+                            }
+                        />
+                        <Route exact path='/todos/create'
+                            component={() => <ToDoForm
+                                                createTodo={(project,userCreator,text)=>
+                                                    this.createTodo(project,userCreator,text)
+                                                }
+                                            />
                             }
                         />
                         <Route exact path='/login'
